@@ -1,9 +1,8 @@
 # MVP – Engenharia de Dados
 
-### Mapeando o público do Enem para a divulgação das lives de correção de um grupo educacional
+### Mapeando o público do Enem para a divulgação das lives de correção das provas por um grupo educacional
 
 **Aluna:** Rosana Ramos de Sousa  
-**GitHub:** https://github.com/rosanarsousa/mvp-enem-2025  
 **Curso:** Pós-Graduação em Ciência de Dados e Analytics – PUC-Rio  
 **Sprint:** Engenharia de Dados (40530010057_20260_01)  
 **Plataforma:** Databricks Free Edition
@@ -27,22 +26,23 @@
   - [4.2 Transformações da camada gold](#42-transformações-da-camada-gold)
 - [5. Qualidade de Dados (Etapa 4.5)](#5-qualidade-de-dados-etapa-45)
 - [6. Análise de Dados (Etapa 4.5)](#6-análise-de-dados-etapa-45)
-  - [6.1 Pergunta 1: estados e municípios prioritários](#61-pergunta-1-quais-estados-e-municípios-de-prova-concentram-mais-inscritos-além-de-bahia-e-minas-gerais)
-  - [6.2 Pergunta 2: peso do público de 16 a 20 anos](#62-pergunta-2-o-público-de-16-a-20-anos-representa-de-fato-mais-da-metade-dos-inscritos)
-  - [6.3 Pergunta 3: volume de inscritos × proporção de jovens](#63-pergunta-3-os-estados-com-mais-inscritos-são-também-os-que-têm-a-maior-proporção-de-jovens-de-16-a-20-anos)
-  - [6.4 Pergunta 4: situação de conclusão do ensino médio](#64-pergunta-4-a-maior-parte-dos-inscritos-ainda-está-cursando-o-ensino-médio)
-  - [6.5 Pergunta 5: tipo de escola](#65-pergunta-5-a-maioria-dos-inscritos-vem-de-escola-pública)
-  - [6.6 Discussão geral](#66-discussão-geral)
+  - [6.1 Pergunta 1: estados e municípios prioritários](#61-pergunta-1-quais-estados-e-municípios-de-prova-concentram-mais-inscritos-além-de-bahia-e-minas-gerais-e-devem-ser-priorizados-no-esforço-de-mídia)
+  - [6.2 Pergunta 2: peso do público de 16 a 20 anos](#62-pergunta-2-o-público-de-16-a-20-anos-representa-de-fato-mais-da-metade-dos-inscritos-se-não-quais-faixas-etárias-deveriam-entrar-na-estratégia)
+  - [6.3 Pergunta 3: volume de inscritos × proporção de jovens](#63-pergunta-3-os-estados-com-mais-inscritos-são-também-os-que-têm-a-maior-proporção-de-jovens-de-16-a-20-anos-ou-a-priorização-de-mercados-muda-quando-olhamos-só-para-o-público-alvo)
+  - [6.4 Pergunta 4: situação de conclusão do ensino médio](#64-pergunta-4-a-maior-parte-dos-inscritos-ainda-está-cursando-o-ensino-médio-como-pressupõe-a-estratégia-ou-há-uma-parcela-relevante-que-já-concluiu-e-é-público-potencial-de-cursinho)
+  - [6.5 Pergunta 5: tipo de escola](#65-pergunta-5-a-maioria-dos-inscritos-vem-de-escola-pública-o-que-isso-indica-para-o-tom-da-comunicação)
+  - [6.6 O que os dados dizem à campanha](#66-o-que-os-dados-dizem-à-campanha)
 - [7. Considerações finais e Autoavaliação](#7-considerações-finais-e-autoavaliação)
-  - [7.1 Pontos de melhoria](#71-pontos-de-melhoria)
-  - [7.2 Autoavaliação](#72-autoavaliação)
+  - [7.1 Atingimento dos objetivos](#71-atingimento-dos-objetivos)
+  - [7.2 Pontos de melhoria](#72-pontos-de-melhoria)
+  - [7.3 Autoavaliação](#73-autoavaliação)
 - [Referências](#referências)
 
 ---
 
 ## Resumo
 
-Este projeto consiste na construção de um pipeline de dados na nuvem para apoiar o planejamento de mídia de uma campanha nacional: a divulgação das lives de correção do Enem 2026 de um grupo educacional. A partir dos microdados do Enem 2025, publicados pelo Inep, os dados foram carregados no Databricks, organizados em arquitetura medalhão (bronze, silver e gold), modelados em esquema estrela, documentados no Unity Catalog e analisados com SQL para responder a cinco perguntas de negócio sobre o perfil e a distribuição geográfica do público.
+Este projeto consiste na construção de um pipeline de dados na nuvem para apoiar o planejamento de mídia de uma campanha nacional: a divulgação das lives de correção das provas do Enem 2026 por um grupo educacional. A partir dos microdados do Enem 2025, publicados pelo Inep, os dados foram carregados no Databricks, organizados em arquitetura medalhão (bronze, silver e gold), modelados em esquema estrela, documentados no Unity Catalog e analisados com SQL para responder a cinco perguntas de negócio sobre o perfil e a distribuição geográfica do público.
 
 ---
 
@@ -56,13 +56,11 @@ O Enem é a principal porta de entrada para o ensino superior no Brasil. Em 2026
 
 #### Sobre o grupo educacional e a campanha
 
-O grupo é consolidado e atua com educação escolar e cursos pré-vestibular em Belo Horizonte e Salvador, e tem o seu sistema de ensino adotado por escolas parceiras em diferentes regiões do Brasil. Com o objetivo de se tornar a maior referência nacional no Enem, a marca busca realizar, em 2026, a maior live de correção do exame do Brasil.
+O grupo é consolidado, com mais de 26 anos, e atua no segmento de educação escolar (educação infantil e ensino médio) e cursos pré-vestibular em Belo Horizonte e Salvador, além de ter o seu sistema de ensino adotado por escolas parceiras em diferentes regiões do Brasil. Com o objetivo de se tornar a maior referência nacional no Enem, a marca busca realizar, em 2026, a maior live de correção do exame do Brasil.
 
-A estratégia é que a divulgação aconteça em redes sociais, influenciadores, branded content com grandes portais, TikTok, YouTube (canal das lives), ambientes de lives de games, ChatGPT e Uber Ads, este último com uma estratégia de impacto no trajeto casa → local de prova, na ida e na volta. A escolha dos canais tem como base pesquisas de mercado sobre o comportamento de consumo de mídia dos públicos entre 16 e 20 anos que estão no ensino médio ou em cursinhos pré-vestibular, já analisadas pelo grupo.
+A estratégia é que a divulgação aconteça em redes sociais, influenciadores, branded content com grandes portais, TikTok, YouTube (canal das lives), ambientes de lives de games, ChatGPT e Uber Ads, este último com uma estratégia de impacto no trajeto casa → local de prova, na ida e na volta. A definição dos canais tem como base pesquisas de mercado sobre o comportamento de consumo de mídia dos públicos entre 16 e 20 anos que estão no ensino médio ou em cursinhos pré-vestibular, já analisadas pelo grupo.
 
-#### O problema
-
-A partir desses pontos, para o enriquecimento da estratégia, além dos dados de canais de mídia, e para que as comunicações aconteçam de forma assertiva, faz-se necessário o entendimento do perfil e da distribuição geográfica dos inscritos no Enem 2025, a edição mais recente com microdados publicados, a fim de identificar em quais estados e municípios vale concentrar o esforço de mídia e de orientar a escolha de canais e do tom de comunicação de cada público.
+Além da análise dos dados de canais de mídia já realizada pelo time de marketing e mídia, faz-se necessário o entendimento do perfil e da distribuição geográfica dos inscritos no Enem 2025, a fim de identificar em quais estados e municípios vale concentrar o esforço de mídia e de orientar a escolha de canais e do tom de comunicação de cada público, fazendo com que a comunicação aconteça de forma assertiva.
 
 > **Observação:** para esta análise, foram utilizados os microdados de 2025, já que os microdados de 2026 só serão publicados após a realização das provas. De todo modo, são os dados mais recentes e trazem o cenário real do perfil de público do exame.
 
@@ -101,8 +99,6 @@ O arquivo `PARTICIPANTES_2025.csv` (489,34 MB) possui **4.810.772 linhas**, uma 
 
 Esse arquivo descreve quem se **inscreveu** no exame, e não quem compareceu às provas. Por isso, ao longo do trabalho, o termo utilizado é "inscritos".
 
-O total de registros nos microdados (4.810.772) é muito próximo do número oficial de inscritos confirmados no Enem 2025 divulgado pelo MEC (4.811.338), com diferença de 566 registros (cerca de 0,01%), o que indica que a base está completa para a análise.
-
 #### Anonimização e LGPD
 
 Para atender à Lei Geral de Proteção de Dados Pessoais (LGPD, Lei nº 13.709/2018), o Inep divulga os microdados em um formato que impede a identificação de pessoas, validado pela Autoridade Nacional de Proteção de Dados (ANPD).
@@ -125,7 +121,7 @@ O notebook [`00_estrutura`](notebooks/00_estrutura.ipynb) criou os schemas bronz
 
 ![Arquivo PARTICIPANTES_2025.csv no volume bronze.arquivos](img/02_upload_volume.png)
 
-*Figura 2 – Arquivo PARTICIPANTES_2025.csv (489,34 MB) armazenado no volume bronze.arquivos.*
+*Figura 2 – Arquivo PARTICIPANTES_2025.csv armazenado no volume bronze.arquivos.*
 
 Em seguida, o notebook [`01_bronze`](notebooks/01_bronze.ipynb) gravou a tabela `bronze.participantes` com o conteúdo do CSV sem alterações, acrescentando apenas dois metadados de controle (data da ingestão e arquivo de origem):
 
@@ -140,11 +136,11 @@ FROM read_files(
 );
 ```
 
-**Resultado:** 4.810.772 linhas e 41 colunas (as 39 originais mais os 2 metadados), com os acentos dos nomes de municípios lidos corretamente, o que confirma o encoding ISO-8859-1.
+**Resultado:** 4.810.772 linhas e 41 colunas (as 39 originais mais os 2 metadados).
 
 ![Contagem de linhas da tabela bronze](img/03_bronze_contagem.png)
 
-*Figura 3 – Contagem de linhas da tabela bronze.participantes: 4.810.772 registros.*
+*Figura 3 – Contagem de linhas da tabela bronze.participantes.*
 
 ![Amostra da tabela bronze](img/04_bronze_amostra.png)
 
@@ -223,9 +219,9 @@ erDiagram
 
 **Decisões de modelagem**
 
-- **`publico_alvo`** (em `dim_faixa_etaria`): transforma a regra de negócio "16 a 20 anos" em dado. Recebe "Sim" nos códigos 1 a 5 (de "menor de 17 anos" a "20 anos"). Como o Inep não tem um código só para 16 anos, a faixa "menor de 17 anos" foi usada como aproximação, e pode incluir eventuais inscritos com menos de 16 anos.
-- **`grupo_situacao`** (em `dim_situacao_conclusao`): agrupa os códigos 2 e 3 em "Cursando o ensino médio", o que torna direta a resposta da pergunta 4.
-- **`presenca_marca`** (em `dim_uf`): marca com "Sim" os estados onde o grupo já atua (BA e MG), o que permite separar praças atuais de novos mercados na pergunta 1.
+- **`publico_alvo`** (em `dim_faixa_etaria`): foi criada para marcar as faixas do público-alvo da campanha (16 a 20 anos). Recebeu "Sim" nos códigos 1 a 5 (de "menor de 17 anos" a "20 anos"). Como o Inep não tem um código só para 16 anos, a faixa "menor de 17 anos" foi usada como aproximação, e pode incluir eventuais inscritos com menos de 16 anos.
+- **`grupo_situacao`** (em `dim_situacao_conclusao`): agrupou os códigos 2 e 3 em "Cursando o ensino médio", o que torna direta a resposta da pergunta 4.
+- **`presenca_marca`** (em `dim_uf`): marcou com "Sim" os estados onde o grupo já atua (BA e MG), o que permite separar praças atuais de novos mercados na pergunta 1.
 - **Código 0 = "Não informado"**: os valores vazios foram convertidos para 0 na camada silver, e todas as dimensões codificadas têm essa linha. Assim, nenhum inscrito "some" das contagens nas junções.
 
 **Integridade do modelo.** O teste de integridade referencial (códigos da fato sem correspondência nas dimensões) resultou em **0 em todas as dimensões**.
@@ -305,7 +301,7 @@ Cópia fiel de `PARTICIPANTES_2025.csv` (Inep), sem alterações, com as 39 colu
 
 #### `silver.participantes`
 
-As 6 colunas selecionadas da bronze, renomeadas, padronizadas e com os vazios de TP_ENSINO tratados. Uma linha por inscrito (4.810.772 registros).
+As 6 colunas selecionadas da bronze, renomeadas, padronizadas e com os vazios de TP_ENSINO tratados. Uma linha por inscrito.
 
 | Coluna | Tipo | Descrição | Domínio | Linhagem |
 |---|---|---|---|---|
@@ -321,7 +317,7 @@ As 6 colunas selecionadas da bronze, renomeadas, padronizadas e com os vazios de
 
 #### `gold.fato_inscricao`
 
-Tabela fato do modelo estrela. Grão: uma linha por inscrito no Enem 2025 (4.810.772 registros).
+Tabela fato do modelo estrela. Grão: uma linha por inscrito no Enem 2025.
 
 | Coluna | Tipo | Descrição | Domínio | Linhagem |
 |---|---|---|---|---|
@@ -386,7 +382,7 @@ Traduz os códigos de TP_ENSINO conforme o dicionário do Inep 2025 (3 linhas).
 
 ## 4. Pipeline de Dados (Etapa 4.4)
 
-O pipeline foi organizado em **7 notebooks SQL**, um por etapa, executados em ordem, com células de texto explicando o objetivo de cada uma. Os notebooks foram exportados da plataforma (.ipynb) e estão na pasta [`notebooks/`](notebooks/) deste repositório.
+O pipeline foi organizado em **7 notebooks SQL**, um por etapa, executados em ordem. Os notebooks foram exportados da plataforma (.ipynb) e estão na pasta [`notebooks/`](notebooks/) deste repositório.
 
 | Nº | Notebook | Lê de | Grava em | O que faz |
 |---|---|---|---|---|
@@ -399,8 +395,6 @@ O pipeline foi organizado em **7 notebooks SQL**, um por etapa, executados em or
 | 06 | [`06_analise`](notebooks/06_analise.ipynb) | camada gold | — | Responde às 5 perguntas, com tabelas e gráficos |
 
 *Tabela 11 – Notebooks do pipeline, em ordem de execução.*
-
-O notebook de qualidade roda **antes** da silver: os problemas encontrados no diagnóstico definem os tratamentos aplicados na limpeza.
 
 ```mermaid
 flowchart LR
@@ -438,8 +432,8 @@ WHERE NU_INSCRICAO IS NOT NULL;
 | Renomeação das colunas (por exemplo, `SG_UF_PROVA` → `sg_uf`) | Nomes padronizados e mais claros | Nenhuma alteração nos dados |
 | `TRIM` e `UPPER` em UF e município | Remover espaços e padronizar a escrita | Evita agrupamentos errados na análise |
 | `CAST(... AS INT)` nas colunas codificadas | Garantir o tipo numérico dos códigos | Junções corretas com as dimensões |
-| `DISTINCT` | Garantir que não há inscrições repetidas | 0 linhas removidas (4.810.772 antes e depois) |
-| `COALESCE(..., 0)` | Transformar vazios em "Não informado" | 3.080.608 registros de TP_ENSINO passaram a ter o código 0 |
+| `DISTINCT` | Garantir que não há inscrições repetidas | Zero linhas removidas |
+| `COALESCE(..., 0)` | Transformar vazios em "Não informado" | Os registros vazios de TP_ENSINO passaram a ter o código 0 |
 
 *Tabela 12 – Transformações da camada silver.*
 
@@ -470,7 +464,6 @@ FROM workspace.silver.participantes;
 |---|---|---|
 | Criação das 4 dimensões, com os códigos do dicionário do Inep e as colunas de regra de negócio | Traduzir códigos em textos e marcar o público-alvo, a situação escolar e as praças da marca | Perguntas respondidas com consultas simples |
 | Criação da fato a partir da silver, unida às dimensões por JOIN nas consultas | Separar as inscrições dos atributos descritivos | Modelo estrela com grão de uma linha por inscrito |
-| Teste de integridade referencial | Garantir que todo código da fato existe na dimensão | 0 registros sem correspondência |
 
 *Tabela 13 – Transformações da camada gold.*
 
@@ -497,9 +490,9 @@ A verificação foi feita na camada bronze, antes de qualquer tratamento (notebo
 
 *Tabela 14 – Resultado das verificações de qualidade e tratamentos aplicados.*
 
-Um cuidado adicional: existem municípios com o mesmo nome em estados diferentes. Por isso, a análise sempre agrupa por **município + UF**.
+Observação: existem municípios com o mesmo nome em estados diferentes. Por isso, os inscritos foram agrupados por **município + UF**.
 
-**Conclusão:** a base está íntegra. O único problema relevante é a baixa completude de TP_ENSINO (64% de vazios), que limita a pergunta 5 e foi tratado para que nenhum inscrito fosse descartado das contagens.
+**Conclusão:** a base está íntegra. O único ponto de atenção é a baixa completude de TP_ENSINO (64% de vazios), que limita a pergunta 5 e foi tratado para que nenhum inscrito fosse descartado das contagens.
 
 ![Completude](img/06_qualidade_completude.png)
 
@@ -535,9 +528,7 @@ Um cuidado adicional: existem municípios com o mesmo nome em estados diferentes
 
 As consultas estão no notebook [`06_analise`](notebooks/06_analise.ipynb) e usam o modelo estrela da camada gold.
 
-### 6.1 Pergunta 1: Quais estados e municípios de prova concentram mais inscritos, além de Bahia e Minas Gerais?
-
-Para responder, a tabela fato foi agrupada por UF, por região e por município de prova, com a `dim_uf` separando os estados onde a marca já atua dos novos mercados.
+### 6.1 Pergunta 1: Quais estados e municípios de prova concentram mais inscritos, além de Bahia e Minas Gerais, e devem ser priorizados no esforço de mídia?
 
 <details>
 <summary><b>Consultas SQL</b></summary>
@@ -604,16 +595,31 @@ LIMIT 20;
 
 Os percentuais por UF e por região vêm da coluna `percentual` das consultas (Figuras 29 e 31). Os demais são somas desses percentuais ou foram calculados a partir das contagens das Figuras 29 e 33.
 
-- **81,4% dos inscritos estão fora de BA e MG**, as praças atuais do grupo, que somam 18,6%.
-- **São Paulo lidera, com 15,6%.** Junto com **RJ, PA, CE e PE**, forma o primeiro grupo de prioridade, com **39,9%** dos inscritos. **MA, PR, RS, GO e PB** somam mais 18,8%.
-- **Nordeste (36,1%) e Sudeste (33,9%)** concentram 70% dos inscritos. Sem a Bahia, o Nordeste ainda tem 27,2% do total.
-- **Os 20 municípios da lista somam 23,4% dos inscritos**, e 18 deles são capitais. O peso da capital no estado varia muito: Macapá reúne 67,1% dos inscritos do Amapá e Manaus, 60,8% dos do Amazonas; já Porto Alegre tem apenas 15,6% dos inscritos do Rio Grande do Sul.
+- **Concentração por estado:** seis UFs reúnem mais da metade dos inscritos (52,8%): SP, MG, BA, RJ, PA e CE. Com dez UFs, chega-se a 70,8%, e as 13 menores somam apenas 18,0%.
+- **Fora das praças atuais:** BA e MG, onde o grupo já atua, somam 18,6%; os outros **81,4%** estão em mercados novos. Entre eles, **SP, RJ, PA, CE e PE** formam o primeiro grupo de prioridade, com **39,9%** dos inscritos, e **MA, PR, RS, GO e PB** somam mais 18,8% (58,6% com os dez).
+- **Regiões:** Nordeste (36,1%) e Sudeste (33,9%) concentram 70% dos inscritos. Mesmo sem BA e MG, as duas regiões ainda reúnem mais da metade do total (51,5%).
+- **Cidades:** os 20 municípios de prova da lista somam 23,4% dos inscritos, e 18 deles são capitais. Os cinco maiores concentram **564.882 inscritos (11,7%)** (Tabela 15).
+- **Capital × interior:** nos cinco estados prioritários, as capitais reúnem só **28,0%** dos inscritos do estado; **72% fazem a prova fora da capital**. O peso da capital varia de 20,1% (Recife, em PE) a 40,4% (Rio de Janeiro, no RJ). A concentração só é alta em estados de menor volume, como o Amazonas (Manaus: 60,8%) e o Amapá (Macapá: 67,1%).
 
-**Implicação para a campanha:** priorizar **SP, RJ, CE, PE e PA** na mídia nacional. No **Uber Ads**, ativar as capitais da lista no trajeto casa → local de prova, com mais eficiência onde a capital concentra o público do estado; onde o público é mais espalhado, como no RS, canais digitais de alcance estadual tendem a render mais.
+| Município de prova | UF | Inscritos | % do total de inscritos | % dos inscritos do estado |
+|---|---|---|---|---|
+| São Paulo | SP | 197.620 | 4,1% | 26,3% |
+| Rio de Janeiro | RJ | 132.793 | 2,8% | 40,4% |
+| Brasília | DF | 82.955 | 1,7% | 100% |
+| Fortaleza | CE | 81.899 | 1,7% | 29,7% |
+| Belém | PA | 69.615 | 1,4% | 24,1% |
+| **Total** | | **564.882** | **11,7%** | — |
 
-### 6.2 Pergunta 2: O público de 16 a 20 anos representa de fato mais da metade dos inscritos?
+*Tabela 15 – Os cinco municípios de prova com mais inscritos fora de BA e MG (calculado a partir das Figuras 29 e 33).*
 
-Para responder, a tabela fato foi unida à `dim_faixa_etaria` e agrupada pela coluna `publico_alvo`, criada na camada gold para marcar a faixa de 16 a 20 anos.
+**O que isso significa para a campanha**
+
+- **Mídia nacional como base:** como 81,4% do público está fora das praças atuais, YouTube, TikTok, redes sociais, ChatGPT e influenciadores de alcance nacional garantem a cobertura do país.
+- **Reforço regionalizado:** SP, RJ, PA, CE e PE (39,9%) devem receber verba adicional em mídia geolocalizada e em influenciadores regionais. MA, PR, RS, GO e PB (18,8%) formam a segunda onda.
+- **Uber Ads por volume de cidade:** começar por São Paulo, Rio de Janeiro, Brasília, Fortaleza e Belém (11,7% dos inscritos) e, havendo verba, expandir para as dez maiores cidades da lista (17,3%). O município de prova é o dado certo para esse canal, porque a estratégia é justamente o trajeto casa → local de prova.
+- **Interior com mídia digital:** como 72% dos inscritos dos estados prioritários fazem a prova fora da capital, o Uber Ads nas capitais alcança só uma parte desse público. O interior deve ser coberto por mídia digital segmentada por estado.
+
+### 6.2 Pergunta 2: O público de 16 a 20 anos representa de fato mais da metade dos inscritos? Se não, quais faixas etárias deveriam entrar na estratégia?
 
 <details>
 <summary><b>Consultas SQL</b></summary>
@@ -659,31 +665,34 @@ ORDER BY d.cod_faixa_etaria;
 
 | Faixa etária | Inscritos | % do total |
 |---|---|---|
-| Menor de 17 anos | 578.654 | 12,0% |
-| 17 anos | 1.021.540 | 21,2% |
-| 18 anos | 1.151.467 | 23,9% |
-| 19 anos | 483.303 | 10,0% |
-| 20 anos | 271.801 | 5,6% |
 | **16 a 20 anos (público-alvo)** | **3.506.765** | **72,9%** |
+| ↳ Menor de 17 anos | 578.654 | 12,0% |
+| ↳ 17 anos | 1.021.540 | 21,2% |
+| ↳ 18 anos | 1.151.467 | 23,9% |
+| ↳ 19 anos | 483.303 | 10,0% |
+| ↳ 20 anos | 271.801 | 5,6% |
 | 21 a 25 anos | 578.797 | 12,0% |
 | 26 a 30 anos | 253.931 | 5,3% |
 | 31 anos ou mais | 471.279 | 9,8% |
 | **Total** | **4.810.772** | **100%** |
 
-*Tabela 15 – Inscritos por faixa etária, com o público-alvo em destaque (faixas acima de 20 anos agrupadas a partir da Figura 37).*
+*Tabela 16 – Inscritos por faixa etária, com o público-alvo em destaque (faixas acima de 20 anos agrupadas a partir da Figura 37).*
 
 **Leitura dos resultados**
 
-- **72,9% dos inscritos (3.506.765) têm de 16 a 20 anos**, bem acima da metade, com pico nos **18 anos (23,9%)** e nos **17 anos (21,2%)**.
-- Depois dos 20 anos a participação cai, mas a faixa de **21 a 25 anos ainda soma 12,0%** dos inscritos.
+- **72,9% dos inscritos (3.506.765) têm de 16 a 20 anos**, bem acima da metade. O pico está em **17 e 18 anos**, que somam **45,2%** (2.173.007): quase metade dos inscritos está no fim do ensino médio ou acabou de concluí-lo.
+- **Um terço é menor de idade:** as faixas "menor de 17 anos" (12,0%) e "17 anos" (21,2%) somam **33,3%** (1.600.194 inscritos).
+- Fora do público-alvo, a faixa de **21 a 25 anos soma 12,0%** e a de **26 anos ou mais, 15,1%** (725.210). Com a faixa de 21 a 25 anos, a cobertura chega a **84,9%** dos inscritos.
 
 **Hipótese: confirmada.** O público prioritário do grupo é a grande maioria dos inscritos.
 
-**Implicação para a campanha:** os canais voltados ao público jovem (TikTok, lives de games, YouTube e influenciadores) estão alinhados ao perfil real dos inscritos. Incluir a faixa de 21 a 25 anos, provavelmente formada por quem refaz a prova, amplia a cobertura para **84,9%** dos inscritos.
+**O que isso significa para a campanha**
 
-### 6.3 Pergunta 3: Os estados com mais inscritos são também os que têm a maior proporção de jovens de 16 a 20 anos?
+- **Canais jovens como base:** TikTok, YouTube, lives de games e influenciadores estão alinhados ao perfil de 72,9% dos inscritos, com a criação voltada principalmente para quem tem 17 e 18 anos.
+- **Menores de idade exigem outra forma de alcance:** as plataformas restringem a publicidade para menores de 18 anos. Na Meta (Facebook e Instagram), anúncios para adolescentes só podem ser segmentados por idade e localização; no Google, que inclui o YouTube, não há personalização de anúncios para menores. Para alcançar esse terço do público, a campanha deve se apoiar em conteúdo e contexto (criadores, conteúdo orgânico, o próprio canal das lives e os ambientes de lives de games), e não em segmentação por interesses.
+- **Público de 21 anos ou mais (27,1%):** provavelmente formado por quem refaz a prova, deve receber mensagens próprias, com peso maior de portais e branded content.
 
-Para responder, a tabela fato foi unida à `dim_faixa_etaria` e à `dim_uf`, e para cada estado foram calculados o total de inscritos, o número de jovens de 16 a 20 anos e o percentual que eles representam.
+### 6.3 Pergunta 3: Os estados com mais inscritos são também os que têm a maior proporção de jovens de 16 a 20 anos, ou a priorização de mercados muda quando olhamos só para o público-alvo?
 
 <details>
 <summary><b>Consulta SQL</b></summary>
@@ -712,34 +721,37 @@ ORDER BY pct_16_20 DESC;
 
 *Figura 40 – Inscritos no Enem 2025 de 16 a 20 anos por UF (%), em ordem decrescente, com BA e MG em destaque.*
 
-| UF | Posição em volume | Inscritos | Jovens de 16 a 20 anos | % de 16 a 20 anos | Posição no % (de 27) |
-|---|---|---|---|---|---|
-| SP | 1º | 751.612 | 601.620 | 80,0% | 4º |
-| MG | 2º | 464.937 | 342.672 | 73,7% | 11º |
-| BA | 3º | 427.983 | 287.654 | 67,2% | 21º |
-| RJ | 4º | 328.943 | 217.713 | 66,2% | 23º |
-| PA | 5º | 289.328 | 189.362 | 65,4% | 24º |
-| CE | 6º | 275.902 | 214.789 | 77,8% | 6º |
-| PE | 7º | 272.279 | 199.398 | 73,2% | 13º |
-| MA | 8º | 211.370 | 156.707 | 74,1% | 8º |
-| PR | 9º | 195.836 | 155.960 | 79,6% | 5º |
-| RS | 10º | 186.503 | 132.054 | 70,8% | 17º |
+| UF | Posição em volume | Inscritos | Jovens de 16 a 20 anos | % de 16 a 20 anos | Posição no % (de 27) | Índice de afinidade |
+|---|---|---|---|---|---|---|
+| SP | 1º | 751.612 | 601.620 | 80,0% | 4º | 110 |
+| MG | 2º | 464.937 | 342.672 | 73,7% | 11º | 101 |
+| BA | 3º | 427.983 | 287.654 | 67,2% | 21º | 92 |
+| RJ | 4º | 328.943 | 217.713 | 66,2% | 23º | 91 |
+| PA | 5º | 289.328 | 189.362 | 65,4% | 24º | 90 |
+| CE | 6º | 275.902 | 214.789 | 77,8% | 6º | 107 |
+| PE | 7º | 272.279 | 199.398 | 73,2% | 13º | 100 |
+| MA | 8º | 211.370 | 156.707 | 74,1% | 8º | 102 |
+| PR | 9º | 195.836 | 155.960 | 79,6% | 5º | 109 |
+| RS | 10º | 186.503 | 132.054 | 70,8% | 17º | 97 |
 
-*Tabela 16 – Os 10 estados com mais inscritos: volume × proporção de jovens de 16 a 20 anos.*
+*Tabela 17 – Os 10 estados com mais inscritos: volume, proporção de jovens de 16 a 20 anos e índice de afinidade (índice = % de jovens no estado ÷ % nacional de 72,9% × 100; acima de 100, o estado é mais jovem que a média).*
 
 **Leitura dos resultados**
 
-- Os maiores percentuais de jovens estão em **TO (80,8%), SC (80,6%) e GO (80,1%)**; os menores, em **AP (60,1%), RN (61,0%) e AC (65,0%)**.
-- **São Paulo é o único estado que combina o maior volume com uma das maiores proporções** (80,0%, 4º lugar): são **601.620 jovens**, quase o mesmo número de MG e BA juntos.
-- **BA, RJ e PA**, entre os cinco estados com mais inscritos, estão entre os sete menores percentuais: uma parte maior do seu público tem 21 anos ou mais.
+- **Índice de afinidade:** os estados mais jovens que a média são **TO e SC (111), GO e SP (110), PR (109) e CE (107)**. Os menos jovens são **AP (82), RN (84), AC (89), PA (90), RJ e PB (91) e BA (92)**.
+- **São Paulo é o único estado que combina o maior volume com um índice alto (110):** são **601.620 jovens**, 17,2% de todos os jovens inscritos no país, quase o mesmo que MG e BA juntos (630.326). Os cinco estados prioritários somam **1.422.882 jovens (40,6%)**.
+- **BA, RJ e PA**, entre os cinco estados com mais inscritos, têm índices entre 90 e 92: uma parte maior do seu público tem 21 anos ou mais (32,8%, 33,8% e 34,6%).
+- **Em números absolutos, o público de 21 anos ou mais é maior em SP** (149.992), seguido de BA (140.329), MG (122.265), RJ (111.230) e PA (99.966).
 
 **Hipótese: não confirmada.** Com exceção de São Paulo, os estados com mais inscritos não são os que têm a maior proporção de jovens.
 
-**Implicação para a campanha:** o **volume** continua definindo **onde** investir, e o **percentual de jovens** ajuda a definir **como** falar. Em SP, CE, PR e GO, os canais jovens tendem a render mais; em RJ e PA, vale reforçar portais e branded content, com mensagens também para quem refaz a prova.
+**O que isso significa para a campanha**
 
-### 6.4 Pergunta 4: A maior parte dos inscritos ainda está cursando o ensino médio?
+- **O volume define onde investir, e o índice define o mix de canais.** Em SP, CE e PR, estados de alto volume e índice de 107 ou mais, os canais jovens (TikTok, lives de games e influenciadores) devem ter mais peso. Em RJ e PA (índices 91 e 90), vale reforçar portais e branded content, com mensagens também para quem refaz a prova.
+- **SP exige as duas frentes:** mesmo com índice alto, é o estado com mais inscritos de 21 anos ou mais em números absolutos.
+- **Na BA, praça atual do grupo,** 140.329 inscritos têm 21 anos ou mais, o segundo maior volume do país, o que reforça a oferta de cursinho em Salvador.
 
-Para responder, a tabela fato foi unida à `dim_situacao_conclusao` e agrupada pela coluna `grupo_situacao`, que junta os códigos de quem ainda está cursando o ensino médio.
+### 6.4 Pergunta 4: A maior parte dos inscritos ainda está cursando o ensino médio, como pressupõe a estratégia, ou há uma parcela relevante que já concluiu e é público potencial de cursinho?
 
 <details>
 <summary><b>Consulta SQL</b></summary>
@@ -771,18 +783,29 @@ ORDER BY inscritos DESC;
 | Já concluiu o ensino médio | 1 | 1.888.320 | 39,3% |
 | Não concluiu e não está cursando | 4 | 80.995 | 1,7% |
 
-*Tabela 17 – Inscritos por situação de conclusão do ensino médio (códigos 2 e 3 detalhados a partir da Figura 26).*
+*Tabela 18 – Inscritos por situação de conclusão do ensino médio (códigos 2 e 3 detalhados a partir da Figura 26).*
 
 **Leitura dos resultados**
 
-- **59,1% dos inscritos ainda cursam o ensino médio**: 37,7% concluem no próprio ano da prova e 21,4% concluem depois, ou seja, fazem o Enem antes do último ano.
-- Ao mesmo tempo, **39,3% (1.888.320) já concluíram o ensino médio**. Como os inscritos com 21 anos ou mais somam 1.304.007, pelo menos **584 mil jovens de até 20 anos já concluíram o ensino médio** e seguem tentando o Enem, um público típico de cursinho pré-vestibular.
+- **59,1% dos inscritos ainda cursam o ensino médio**, em dois grupos com perfis diferentes: **1.811.344 (37,7%) concluem em 2025**, o público central da campanha, que usa o Enem para entrar na faculdade; e **1.030.113 (21,4%) concluem depois**, ou seja, fazem a prova antes do último ano, como treineiros.
+- **39,3% (1.888.320) já concluíram o ensino médio.** Como os inscritos com 21 anos ou mais somam 1.304.007, pelo menos **584.313 jovens de até 20 anos** já concluíram o ensino médio e seguem tentando o Enem, um público típico de cursinho pré-vestibular.
+- **1,7% (80.995)** não concluíram o ensino médio e não estão cursando.
 
 **Hipótese: confirmada, com uma nuance importante.** A maioria ainda está no ensino médio, mas a parcela que já concluiu é grande o bastante para ser tratada como um público próprio.
 
-**Implicação para a campanha:** a mensagem principal pode falar com o estudante do ensino médio, o que também conversa com as escolas próprias e parceiras do grupo. Já os quase **1,9 milhão que concluíram o ensino médio** justificam uma linha de comunicação própria, ligada aos cursos pré-vestibular.
+**O que isso significa para a campanha:** os dados indicam três segmentos, com mensagens e canais diferentes:
 
-### 6.5 Pergunta 5: A maioria dos inscritos vem de escola pública?
+| Segmento | Inscritos | Mensagem | Canais com mais peso |
+|---|---|---|---|
+| Concluintes de 2025 | 1.811.344 (37,7%) | Corrigir a prova ao vivo para estimar a nota e planejar a entrada na faculdade | Todos, com Uber Ads nos dias de prova |
+| Treineiros (concluem após 2025) | 1.030.113 (21,4%) | Conhecer a prova e começar a preparação para o próximo Enem | TikTok, lives de games e escolas próprias e parceiras |
+| Já concluíram | 1.888.320 (39,3%) | Cursinho pré-vestibular para a próxima edição | Portais e branded content, YouTube |
+
+*Tabela 19 – Segmentos de mensagem a partir da situação de conclusão do ensino médio.*
+
+Os treineiros tendem a ser os mais novos, e muitos são menores de idade. Por isso, dependem mais de conteúdo, criadores e das escolas do que de anúncios segmentados (ver pergunta 2).
+
+### 6.5 Pergunta 5: A maioria dos inscritos vem de escola pública? O que isso indica para o tom da comunicação?
 
 <details>
 <summary><b>Consulta SQL</b></summary>
@@ -814,45 +837,41 @@ ORDER BY inscritos DESC;
 | Ensino regular | 1.721.022 | 35,8% | 99,5% |
 | Educação especial – modalidade substitutiva | 9.142 | 0,2% | 0,5% |
 
-*Tabela 18 – Inscritos por tipo de ensino.*
+*Tabela 20 – Inscritos por tipo de ensino.*
 
 **Leitura dos resultados:** 64% dos inscritos não informaram o tipo de ensino. Entre os que informaram, praticamente todos (99,5%) vêm do ensino regular. O dicionário de 2025 também não tem a categoria de Educação de Jovens e Adultos (EJA), o que impede separar esse público.
 
 **Hipótese: não verificável com os dados disponíveis.**
 
-**Implicação para a campanha:** sem a divisão entre rede pública e privada, os dados não sustentam uma segmentação de tom por tipo de escola. A recomendação é adotar uma linguagem acessível e inclusiva, adequada a todos os perfis, e buscar essa informação em fontes complementares (ver o item [Trabalhos futuros](#trabalhos-futuros), na seção 7.2 deste documento).
+**O que isso significa para a campanha:** sem a divisão entre rede pública e privada, os dados não sustentam uma segmentação de tom por tipo de escola. A recomendação é adotar uma linguagem acessível e inclusiva, adequada a todos os perfis, e buscar essa informação em fontes complementares (ver o item [Trabalhos futuros](#trabalhos-futuros), na seção 7.3 deste documento).
 
-### 6.6 Discussão geral
+### 6.6 O que os dados dizem à campanha
 
-Vistas em conjunto, as respostas mostram que a estratégia do grupo acerta no público, mas precisa ampliar o mapa. O perfil jovem, que orienta a escolha dos canais, foi confirmado. Já a presença atual da marca, concentrada em BA e MG, cobre menos de um quinto dos inscritos: o alcance nacional da campanha depende de mercados onde o grupo ainda não atua. São Paulo é a principal oportunidade, por reunir o maior volume e uma das maiores proporções de jovens, e o restante do Nordeste é uma expansão natural a partir de Salvador. No Uber Ads, a concentração dos inscritos nas capitais permite começar por poucas cidades com alto alcance.
+Vistas em conjunto, as respostas mostram que a estratégia do grupo acerta no público, mas precisa ampliar o mapa e segmentar a mensagem. O perfil jovem, que orienta a escolha dos canais, foi confirmado (72,9%). Já a presença atual da marca, concentrada em BA e MG, cobre menos de um quinto dos inscritos: o alcance nacional da campanha depende de mercados onde o grupo ainda não atua, com São Paulo como principal oportunidade (maior volume e índice de afinidade 110). O público também não é homogêneo: um terço é menor de idade, o que limita a segmentação de anúncios, e quase 40% já concluiu o ensino médio.
 
-As perguntas 3 e 4 mostram, ainda, que o público não é homogêneo. Há mercados mais jovens, onde os canais voltados a esse público devem ter mais peso, e há uma parcela grande de inscritos que já concluiu o ensino médio e tende a buscar cursinho. Por isso, além de definir onde investir, os dados indicam que a campanha precisa de duas linhas de mensagem: uma para o estudante do ensino médio e outra para quem vai refazer a prova.
+A tabela abaixo reúne as recomendações das cinco perguntas em um plano por canal:
 
-**Limitações:** os dados descrevem **inscritos**, e não presentes na prova; o **local de prova** não é necessariamente o local de residência; os dados de **2025** foram usados como referência para 2026, edição que teve 5,08% mais inscritos; e a pergunta 5 não pôde ser respondida por falta da variável.
+| Canal | Papel na campanha | Público principal | Onde | Base nos dados |
+|---|---|---|---|---|
+| YouTube (canal das lives) | Destino da campanha: todos os canais levam para a live de correção | Todos os inscritos | Nacional | Todas as perguntas |
+| TikTok e redes sociais | Alcance e frequência antes das provas | 16 a 20 anos (72,9%), com foco em 17 e 18 anos (45,2%) | Nacional, com reforço em SP, RJ, PA, CE e PE | Perguntas 1 e 2 |
+| Influenciadores | Credibilidade e alcance regional | 16 a 20 anos | Nacionais e regionais nos cinco estados prioritários | Perguntas 1 e 3 |
+| Lives de games | Alcance por contexto, sem depender de segmentação por interesses | Menores de 18 anos (33,3%) e treineiros | Nacional | Perguntas 2 e 4 |
+| Branded content em portais | Credibilidade para quem refaz a prova e para os responsáveis | 21 anos ou mais (27,1%) e quem já concluiu (39,3%) | Nacional, com reforço em RJ, PA e BA | Perguntas 2, 3 e 4 |
+| ChatGPT | Presença no momento de estudo e de dúvida | Estudantes em preparação | Nacional | Estratégia do grupo (os microdados não trazem consumo de mídia) |
+| Uber Ads | Impacto no trajeto casa → local de prova, em 8 e 15 de novembro | Inscritos adultos e responsáveis que acompanham os menores | As 5 maiores cidades (11,7%), com expansão para as 10 maiores (17,3%) | Pergunta 1 |
+
+*Tabela 21 – Plano de mídia orientado pelos dados: canais, públicos e praças.*
+
+No Uber Ads, a regra da plataforma no Brasil exige que menores de 18 anos viajem acompanhados de um adulto. Por isso, no trajeto até a prova, a mensagem também alcança os pais e responsáveis. A ida e a volta podem ser usadas de forma complementar: na ida, um lembrete de boa prova; na volta, o convite para assistir à correção ao vivo no mesmo dia.
+
+**Limitações:** os dados descrevem **inscritos**, e não presentes na prova; o **local de prova** não é necessariamente o local de residência; os dados de **2025** foram usados como referência para 2026, edição que teve 5,08% mais inscritos; a pergunta 5 não pôde ser respondida por falta da variável; os microdados não trazem consumo de mídia, então a escolha de canais combina estes dados com as pesquisas do grupo; e a consulta por município excluiu BA e MG, de modo que Salvador e Belo Horizonte, praças atuais do grupo, precisariam de uma consulta própria para o planejamento do Uber Ads.
 
 ---
 
 ## 7. Considerações finais e Autoavaliação
 
-### 7.1 Pontos de melhoria
-
-O pipeline cumpre o seu papel como MVP, mas pode evoluir com recursos que o próprio Databricks oferece e que não foram usados nesta primeira versão. Essas melhorias o tornariam mais automático, mais fácil de manter e mais útil para a equipe de marketing:
-
-- **Automatizar a coleta e a execução:** baixar o pacote direto do site do Inep, com o acesso de saída à internet (liberado na Free Edition após a verificação da conta), e encadear os notebooks em um **Job** do Databricks, usando o ano da edição como parâmetro.
-- **Automatizar a qualidade:** transformar as verificações do notebook 02 em regras (*expectations*) de um pipeline declarativo do Databricks, que interrompem a execução quando falham.
-- **Integrar com o GitHub** pelos Git folders do Databricks, sem exportação manual dos notebooks.
-- **Entregar um dashboard no Databricks**, para que a equipe de marketing consulte os resultados sem precisar de SQL, com filtros por região e UF e com os gráficos padronizados em percentual, como na leitura dos resultados.
-- **Criar um espaço do Genie** para a equipe de marketing consultar os dados em linguagem natural (por exemplo, "quantos inscritos de 17 anos fizeram a prova em Recife?").
-
-### 7.2 Autoavaliação
-
-#### Minha trajetória e o desafio deste trabalho
-
-Venho da área de Humanas, da comunicação, e atuo com mídia, em um caminho de evolução para a área de dados. Por isso, este MVP foi um grande desafio: foi a primeira vez que construí um pipeline de dados de ponta a ponta, em uma plataforma de nuvem, escrevendo consultas em SQL e organizando os dados em camadas e em um modelo estrela.
-
-Não imaginei que o trabalho seria tão extenso. Parte disso veio da escolha dos microdados do Enem: uma base grande (quase 5 milhões de linhas), com regras próprias de anonimização e um dicionário de variáveis que precisa ser consultado a cada etapa. Escolhi esse tema por interesse profissional, porque ele se conecta diretamente com o planejamento de mídia que faço no dia a dia para clientes do segmento de educação, e isso me manteve motivada ao longo de todas as etapas.
-
-#### Atingimento dos objetivos
+### 7.1 Atingimento dos objetivos
 
 | Pergunta | Resultado | Hipótese |
 |---|---|---|
@@ -862,43 +881,59 @@ Não imaginei que o trabalho seria tão extenso. Parte disso veio da escolha dos
 | 4. Situação de conclusão | Respondida | Confirmada, com nuance |
 | 5. Escola pública | Não respondida diretamente | Não verificável: variável indisponível; resposta aproximada com TP_ENSINO |
 
-*Tabela 19 – Atingimento dos objetivos por pergunta.*
+*Tabela 22 – Atingimento dos objetivos por pergunta.*
 
 O objetivo principal, entender o perfil e a distribuição geográfica dos inscritos para orientar a campanha, foi atingido. Quatro das cinco perguntas foram respondidas com os dados, e a quinta foi mantida no objetivo, como pede o enunciado, com a explicação de por que não pôde ser respondida.
 
+### 7.2 Pontos de melhoria
+
+Com o meu olhar da área de mídia, vejo que a análise teria sido mais completa se tivesse cruzado os dados do Inep com o **plano de mídia** da campanha, ainda em planejamento, que define **onde, como e com quanto** esse público será impactado. Esse é o principal ponto de melhoria:
+
+- **Cruzar os microdados com o plano de mídia:** o pipeline poderia ter incluído, como novas fontes na camada bronze, os dados do planejamento: os canais sugeridos, o perfil de audiência de cada canal (faixa etária e praças alcançadas, a partir das pesquisas do grupo e das ferramentas de planejamento das plataformas), as entregas previstas (alcance e impressões estimados por estado) e os investimentos por canal e por praça. Isso teria permitido verificar se o plano de mídia está distribuído de acordo com o público, e não apenas mostrar onde ele está.
+- **Ampliar o modelo estrela para o planejamento de mídia:** o modelo poderia ter ganhado uma tabela fato do plano de mídia (um registro por canal, UF e semana de veiculação) e uma dimensão de canais, com o perfil de audiência de cada um, ligadas à mesma `dim_uf` usada neste trabalho. Assim, as duas tabelas fato, de inscritos e de plano de mídia, compartilhariam as dimensões e poderiam ser cruzadas em uma única consulta.
+- **Criar indicadores para a distribuição da verba:** com os dois tipos de dado no mesmo modelo, teria sido possível calcular, por exemplo, a participação de cada estado no investimento comparada ao seu peso nos inscritos e nos jovens de 16 a 20 anos, o investimento previsto por mil inscritos em cada praça e um índice de oportunidade que combine volume de inscritos, índice de afinidade e custo de mídia. Esses indicadores ajudariam a corrigir distorções antes de a campanha ir ao ar.
+
+Além disso, os resultados ficariam mais acessíveis à equipe de marketing com **um dashboard no Databricks**, para consultar os resultados sem precisar de SQL, com filtros por região, UF e faixa etária, gráficos padronizados em percentual e a comparação entre o peso de cada praça nos inscritos e no plano de mídia.
+
+Quando a campanha estiver no ar, a mesma estrutura poderia receber os resultados reais (alcance, cliques e acessos rastreados por links com UTM), para comparar o previsto com o realizado.
+
+### 7.3 Autoavaliação
+
+#### Minha trajetória e o desafio deste trabalho
+
+Venho da área de Humanas, da comunicação, e atuo com mídia. Tenho muito interesse na área de dados e, por isso, busquei esta pós-graduação. Este projeto foi um grande desafio: foi a primeira vez que tive acesso ao universo da programação de dados.
+
+Não imaginei que o trabalho seria tão extenso. Parte disso veio da escolha dos microdados do Enem: uma base grande (quase 5 milhões de linhas), com um dicionário de variáveis que, para minha surpresa, precisou ser consultado a cada etapa. Escolhi esse tema por interesse profissional, porque ele se conecta diretamente com o planejamento de mídia que faço no dia a dia para clientes do segmento de educação, e isso me manteve motivada ao longo de todas as etapas, pois quero expandir as minhas análises para além dos dados de canais de campanha.
+
 #### Dificuldades encontradas
 
-Como iniciei este trabalho sem experiência em engenharia de dados, precisei aprender ao mesmo tempo os conceitos (pipeline, arquitetura medalhão, esquema estrela, catálogo de dados) e a ferramenta. As principais dificuldades foram:
+Comecei este trabalho sem experiência em engenharia de dados e precisei aprender, ao mesmo tempo, os conceitos e a ferramenta. As maiores dificuldades foram:
 
-- entender conceitos técnicos novos para quem vem da comunicação (tipos de dados, junções entre tabelas, camadas) e a interface do Databricks;
-- lidar com um arquivo grande (489 MB e quase 5 milhões de linhas) e conferir se o encoding estava correto;
-- descobrir que a variável de tipo de escola (pública ou privada), necessária para a pergunta 5, não existe no arquivo de participantes de 2025;
-- tratar os 64% de valores vazios em TP_ENSINO sem perder registros;
-- configurar os gráficos (tipo, eixos, ordenação e rótulos) de forma que comunicassem bem os resultados;
-- administrar o tempo, já que o volume de etapas e de documentação foi maior do que eu esperava.
+- **Aprender e aplicar em pouco tempo.** Eu não tinha a dimensão do quanto esta área é ampla, nem de quantas ferramentas e possibilidades existem, e precisei transformar conceitos novos em prática em um curto período.
+- **Lidar com números e arquivos desse tamanho.** Trabalhar com um arquivo de 489 MB e quase 5 milhões de linhas era algo totalmente novo para mim. No primeiro momento, pensei em desistir; seguir o trabalho etapa por etapa foi o que me fez continuar.
+- **Administrar o tempo**, já que o volume de etapas e de documentação foi bem maior do que eu esperava.
 
 #### Uso de inteligência artificial
 
-Como o tema era muito novo para mim, precisei da ajuda de uma ferramenta de inteligência artificial para entender os conceitos e para construir os códigos SQL. Na prática, esse passo a passo foi de muito aprendizado: cada comando foi executado por mim no Databricks, conferido pelos resultados e registrado nos prints deste documento, e cada erro encontrado virou uma oportunidade de entender melhor a ferramenta e os dados.
+Como engenharia de dados era um tema novo para mim, usei uma ferramenta de inteligência artificial para construir os códigos SQL. Isso não tirou o aprendizado do processo: cada consulta foi executada por mim no Databricks e conferida pelos resultados, e foi olhando esses resultados que identifiquei problemas como o gráfico de pizza que gerava duas pizzas de 100% e a legenda "Sim/Não", que não comunicava bem o público-alvo.
 
-A definição do tema, do problema de negócio, das perguntas e das hipóteses partiu da minha experiência na área de mídia. Em um trabalho tão extenso, a IA me ajudou a ter um caminho mais claro, dividindo o projeto em etapas menores e explicando o porquê de cada uma. Considero esse uso parte do aprendizado: saber fazer as perguntas certas, testar, conferir os resultados e corrigir o que não estava bom.
+O tema, o problema de negócio, as perguntas, as hipóteses e a estratégia de canais, incluindo a ideia do Uber Ads no trajeto casa → local de prova, partiram da minha experiência com planejamento de mídia para clientes do segmento de educação. Em um trabalho tão extenso, a IA me ajudou a dividir o projeto em etapas menores e na parte operacional da documentação, como as tabelas e o sumário.
 
 #### Histórico de melhorias
 
-Várias partes do trabalho foram revisadas depois da primeira versão:
+Várias partes do trabalho foram revisadas depois da primeira versão. Na coluna "Evidência", "antes" indica a versão anterior e "depois", a versão final usada no documento; as versões anteriores estão logo abaixo da tabela.
 
 | O que aconteceu | Como foi resolvido | Evidência |
 |---|---|---|
 | A variável de tipo de escola não existia no arquivo de 2025 | Busca no dicionário, uso de TP_ENSINO como aproximação e manutenção da pergunta original | Seção 6.5 |
-| TP_ENSINO com 64% de vazios | Tratamento na silver, com o código 0 = "Não informado" | Antes: Figura 27 · Depois: Figura 21 |
-| Gráfico de regiões criado como dispersão, com um ponto cortado | Troca para gráfico de barras com percentuais | Figura 32 |
-| Pizza com "Group by" gerando duas pizzas de 100% | Reconfiguração dos eixos | Figura 36 |
-| Legenda do público-alvo como "Sim/Não", pouco clara | Consulta ajustada para "16 a 20 anos" e "Outras idades" | Antes: Figura 45 · Depois: Figuras 35 e 36 |
-| Gráfico de faixa etária em ordem alfabética ("Menor de 17 anos" no fim) e com erro de digitação no eixo | Ordem das idades restaurada e nome do eixo corrigido para "Faixa etária" | Antes: Figura 46 · Depois: Figura 38 |
-| Pergunta 3 ordenada por volume, o que dificultava comparar percentuais | Consulta reordenada pelo percentual de jovens | Antes: Figura 47 · Depois: Figura 39 |
-| Parte do notebook de análise sumiu durante a edição | Recuperação pelo histórico de versões do Databricks | — |
+| Gráfico de regiões criado como dispersão, com um ponto cortado | Troca para gráfico de barras com percentuais | Depois: Figura 32 (seção 6.1) |
+| Pizza com "Group by" gerando duas pizzas de 100% | Reconfiguração dos eixos | Depois: Figura 36 (seção 6.2) |
+| Legenda do público-alvo como "Sim/Não", pouco clara | Consulta ajustada para "16 a 20 anos" e "Outras idades" | Antes: Figura 45 (abaixo) · Depois: Figuras 35 e 36 (seção 6.2) |
+| Gráfico de faixa etária em ordem alfabética ("Menor de 17 anos" no fim) e com erro de digitação no eixo | Ordem das idades restaurada e nome do eixo corrigido para "Faixa etária" | Antes: Figura 46 (abaixo) · Depois: Figura 38 (seção 6.2) |
+| Pergunta 3 ordenada por volume, o que dificultava comparar percentuais | Consulta reordenada pelo percentual de jovens | Antes: Figura 47 (abaixo) · Depois: Figura 39 (seção 6.3) |
+| Parte do notebook de análise sumiu durante a edição | Recuperação pelo histórico de versões do Databricks e, na revisão final, reinserção do código da consulta da pergunta 5, que havia ficado vazio | Notebook `06_analise` |
 
-*Tabela 20 – Histórico de melhorias ao longo do trabalho.*
+*Tabela 23 – Histórico de melhorias ao longo do trabalho.*
 
 ![Antes: legenda do público-alvo como Sim/Não](img/29_p2_publico_alvo.png)
 
@@ -916,30 +951,27 @@ Várias partes do trabalho foram revisadas depois da primeira versão:
 
 #### O que aprendi
 
-Foi muito enriquecedor conhecer as possibilidades de construção de análises para além do dia a dia de dashboards simples de mídia. Em vez de olhar apenas para indicadores prontos, aprendi a partir do dado bruto, organizá-lo e cruzá-lo para testar hipóteses de negócio, como o tamanho real do público-alvo ou os mercados prioritários para uma campanha.
+No meu dia a dia de mídia, trabalho com dashboards que já chegam prontos, com indicadores de alcance, cliques e audiência. Neste trabalho, pela primeira vez, parti do dado bruto: um arquivo de quase 5 milhões de linhas, com códigos que só faziam sentido com o dicionário do Inep ao lado. Aprendi a organizar esses dados em camadas, a transformar códigos em informação e a cruzá-los para testar hipóteses que eu levava como certas, como a de que o público de 16 a 20 anos era a maioria dos inscritos (e é: 72,9%) ou a de que os estados com mais inscritos seriam também os mais jovens (e, com exceção de São Paulo, não são).
 
-Do ponto de vista técnico, aprendi a construir um pipeline de dados de ponta a ponta na nuvem: carregar dados brutos, verificar a qualidade antes de transformar, organizar as camadas bronze, silver e gold, modelar um esquema estrela, documentar tabelas e colunas em um catálogo e usar SQL para responder a perguntas de negócio. Também aprendi que a qualidade dos dados e a disponibilidade das variáveis definem o que é possível responder, e que a clareza de uma tabela ou de um gráfico é tão importante quanto o número que ele mostra.
-
-Na minha área, esse raciocínio pode apoiar decisões de planejamento de mídia, como a escolha de praças, o dimensionamento de públicos e a distribuição de verba entre canais, a partir de dados abertos e verificáveis.
+Outro aprendizado foi ver o dado mudar a estratégia, e não só confirmá-la. Descobrir que um terço dos inscritos é menor de idade, por exemplo, muda a forma de planejar a mídia, porque as plataformas limitam a segmentação de anúncios para esse público. Na minha área, esse raciocínio pode apoiar a escolha de praças, o dimensionamento de públicos e a distribuição de verba entre canais, a partir de dados abertos e verificáveis.
 
 #### O que eu faria diferente
 
-- **Ler o dicionário de variáveis antes de fechar as perguntas.** A ausência da variável de tipo de escola só apareceu no meio do trabalho; com a leitura prévia, a pergunta 5 poderia ter sido ajustada desde o início.
-- **Planejar o cronograma com mais folga**, considerando o tamanho dos microdados e o tempo de aprendizado da ferramenta.
-- **Padronizar desde o início os nomes dos prints e das tabelas**, o que facilitaria a documentação final.
-- **Começar com um escopo ainda menor e ampliar depois**, seguindo a própria lógica do MVP.
+- **Abrir o dicionário do Inep antes de escrever as perguntas.** Só descobri, com a base já carregada, que o arquivo de participantes de 2025 não traz a variável de tipo de escola. Com essa leitura no começo, a pergunta 5 já teria nascido ajustada à variável TP_ENSINO ou apoiada em outra fonte.
+- **Reservar mais tempo para documentar do que para construir.** Montar o README, organizar os 52 prints e rever os gráficos levou quase tanto tempo quanto o próprio pipeline.
+- **Nomear os prints com um padrão desde o primeiro dia** (número, camada ou pergunta e versão). Parte da reta final foi gasta renomeando arquivos, como o `31b__rev1` e o `08b` com a palavra "complemento", e conferindo cada nome com o README.
+- **Guardar uma cópia do notebook de análise antes de cada ajuste grande.** A parte do `06_analise` que se perdeu e a consulta da pergunta 5 que ficou sem código mostraram, na prática, a importância de versionar o trabalho.
 
 #### Trabalhos futuros
 
 - Repetir a análise com os **microdados do Enem 2026**, quando forem publicados, e comparar a evolução do público.
 - Usar a **Plataforma Sedap+ do Inep**, lançada em 2026, que permite consultas agregadas com proteção de privacidade, para cruzar o perfil dos inscritos com as notas.
 - Buscar a informação de **rede de ensino (pública ou privada)** em fontes complementares, como o Censo Escolar, para responder à pergunta 5.
-- Após a campanha, cruzar os **resultados da mídia impulsionada** (alcance e cliques por estado, informados pelas plataformas de anúncio) e os acessos rastreados por **links com UTM** com o perfil dos inscritos, para medir se as praças e os públicos priorizados responderam como o previsto.
 - Transformar este projeto em uma **peça de portfólio** que una comunicação e dados, mostrando como dados públicos podem orientar o planejamento de mídia.
 
 #### Avaliação geral
 
-Mesmo com as limitações descritas, considero que o MVP cumpre o seu papel: o pipeline funciona de ponta a ponta, os dados estão documentados e as respostas trazem recomendações práticas para a campanha. Mais do que o resultado, este trabalho me deu confiança para seguir evoluindo na área de dados. Acredito que ele ainda pode ser melhorado com o que aprenderei nas próximas etapas do curso e com as boas práticas dos trabalhos dos colegas.
+Olhando para o meu ponto de partida, o de quem vinha da comunicação sem nunca ter montado um pipeline, considero que o MVP entregou o que se propôs: os 4,8 milhões de registros do Enem 2025 passaram pelas camadas bronze, silver e gold sem perder nenhum inscrito, o modelo e o catálogo estão documentados, e as cinco perguntas viraram recomendações concretas para a campanha, das praças prioritárias ao Uber Ads nos dias de prova. O momento que mais me marcou foi perceber, na revisão final, que uma recomendação de mídia não se sustentava nos próprios dados e corrigi-la a partir do gráfico que eu mesma tinha construído. Ali entendi, na prática, que o olhar de mídia e o olhar de dados se completam. Saio deste trabalho com mais segurança para usar dados no planejamento que faço no dia a dia e com vontade de aprofundar o que ficou como ponto de melhoria, a começar pelo cruzamento com o plano de mídia.
 
 ---
 
@@ -951,4 +983,7 @@ Mesmo com as limitações descritas, considero que o MVP cumpre o seu papel: o p
 - JORNAL DE BRASÍLIA. **Enem 2026 tem mais de 5 milhões de inscritos confirmados**. 3 jul. 2026. Disponível em: https://jornaldebrasilia.com.br/noticias/concursos-e-carreiras/enem-2026-tem-mais-de-5-milhoes-de-inscritos-confirmados/. Acesso em: 24 set. 2026.
 - BAND. **Enem 2026: MEC confirma mais de 5 milhões de inscritos**. 3 jul. 2026. Disponível em: https://www.band.com.br/educacao/enem-2026-mec-confirma-mais-de-5-milhoes-de-inscritos. Acesso em: 24 set. 2026.
 - PODER360. **Enem 2026 tem 5,05 milhões de inscrições confirmadas**. Disponível em: https://www.poder360.com.br/poder-educacao/enem-2026-tem-505-milhoes-de-inscricoes-confirmadas/. Acesso em: 26 set. 2026.
+- CANALTECH. **Facebook e Instagram limitam segmentação de anúncios para adolescentes**. 11 jan. 2023. Disponível em: https://canaltech.com.br/redes-sociais/facebook-e-instagram-limitam-segmentacao-de-anuncios-para-adolescentes-235614/. Acesso em: 27 set. 2026.
+- GOOGLE. **Ad-serving protections for teens**. Disponível em: https://support.google.com/adspolicy/answer/12205906. Acesso em: 27 set. 2026.
+- UBER. **Código da Comunidade Uber (Brasil)**. Disponível em: https://www.uber.com/legal/en/document/?name=general-community-guidelines&country=brazil&lang=pt-br. Acesso em: 27 set. 2026.
 - DATABRICKS. **Databricks Free Edition limitations**. Disponível em: https://docs.databricks.com/aws/en/getting-started/free-edition-limitations. Acesso em: 24 set. 2026.
