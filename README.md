@@ -689,7 +689,7 @@ ORDER BY d.cod_faixa_etaria;
 **O que isso significa para a campanha**
 
 - **Canais jovens como base:** TikTok, YouTube, lives de games e influenciadores estão alinhados ao perfil de 72,9% dos inscritos, com a criação voltada principalmente para quem tem 17 e 18 anos.
-- **Menores de idade exigem outra forma de alcance:** as plataformas restringem a publicidade para menores de 18 anos. Na Meta (Facebook e Instagram), anúncios para adolescentes só podem ser segmentados por idade e localização; no Google, que inclui o YouTube, não há personalização de anúncios para menores. Para alcançar esse terço do público, a campanha deve se apoiar em conteúdo e contexto (criadores, conteúdo orgânico, o próprio canal das lives e os ambientes de lives de games), e não em segmentação por interesses.
+- **Menores de idade exigem atenção às regras de cada plataforma:** algumas plataformas limitam a segmentação de anúncios para menores de 18 anos, e outras não, como os ambientes de lives de games. Na Meta (Facebook e Instagram), por exemplo, anúncios para adolescentes só podem ser segmentados por idade e localização; no Google, que inclui o YouTube, não há personalização de anúncios para menores. Por isso, o plano deve considerar as regras de cada canal e, onde houver limitação, apoiar-se também em conteúdo e contexto (criadores, conteúdo orgânico, o próprio canal das lives e os ambientes de lives de games).
 - **Público de 21 anos ou mais (27,1%):** provavelmente formado por quem refaz a prova, deve receber mensagens próprias, com peso maior de portais e branded content.
 
 ### 6.3 Pergunta 3: Os estados com mais inscritos são também os que têm a maior proporção de jovens de 16 a 20 anos, ou a priorização de mercados muda quando olhamos só para o público-alvo?
@@ -803,7 +803,7 @@ ORDER BY inscritos DESC;
 
 *Tabela 19 – Segmentos de mensagem a partir da situação de conclusão do ensino médio.*
 
-Os treineiros tendem a ser os mais novos, e muitos são menores de idade. Por isso, dependem mais de conteúdo, criadores e das escolas do que de anúncios segmentados (ver pergunta 2).
+Os treineiros tendem a ser os mais novos, e muitos são menores de idade. Por isso, nas plataformas que limitam a segmentação para esse público, o conteúdo, os criadores e as escolas próprias e parceiras ganham importância (ver pergunta 2).
 
 ### 6.5 Pergunta 5: A maioria dos inscritos vem de escola pública? O que isso indica para o tom da comunicação?
 
@@ -847,7 +847,7 @@ ORDER BY inscritos DESC;
 
 ### 6.6 O que os dados dizem à campanha
 
-Vistas em conjunto, as respostas mostram que a estratégia do grupo acerta no público, mas precisa ampliar o mapa e segmentar a mensagem. O perfil jovem, que orienta a escolha dos canais, foi confirmado (72,9%). Já a presença atual da marca, concentrada em BA e MG, cobre menos de um quinto dos inscritos: o alcance nacional da campanha depende de mercados onde o grupo ainda não atua, com São Paulo como principal oportunidade (maior volume e índice de afinidade 110). O público também não é homogêneo: um terço é menor de idade, o que limita a segmentação de anúncios, e quase 40% já concluiu o ensino médio.
+Vistas em conjunto, as respostas mostram que a estratégia do grupo acerta no público, mas precisa ampliar o mapa e segmentar a mensagem. O perfil jovem, que orienta a escolha dos canais, foi confirmado (72,9%). Já a presença atual da marca, concentrada em BA e MG, cobre menos de um quinto dos inscritos: o alcance nacional da campanha depende de mercados onde o grupo ainda não atua, com São Paulo como principal oportunidade (maior volume e índice de afinidade 110). O público também não é homogêneo: um terço é menor de idade, o que exige atenção às regras de segmentação de cada plataforma, e quase 40% já concluiu o ensino médio.
 
 A tabela abaixo reúne as recomendações das cinco perguntas em um plano por canal:
 
@@ -856,7 +856,7 @@ A tabela abaixo reúne as recomendações das cinco perguntas em um plano por ca
 | YouTube (canal das lives) | Destino da campanha: todos os canais levam para a live de correção | Todos os inscritos | Nacional | Todas as perguntas |
 | TikTok e redes sociais | Alcance e frequência antes das provas | 16 a 20 anos (72,9%), com foco em 17 e 18 anos (45,2%) | Nacional, com reforço em SP, RJ, PA, CE e PE | Perguntas 1 e 2 |
 | Influenciadores | Credibilidade e alcance regional | 16 a 20 anos | Nacionais e regionais nos cinco estados prioritários | Perguntas 1 e 3 |
-| Lives de games | Alcance por contexto, sem depender de segmentação por interesses | Menores de 18 anos (33,3%) e treineiros | Nacional | Perguntas 2 e 4 |
+| Lives de games | Alcance do público jovem em um ambiente sem essa limitação de segmentação | Menores de 18 anos (33,3%) e treineiros | Nacional | Perguntas 2 e 4 |
 | Branded content em portais | Credibilidade para quem refaz a prova e para os responsáveis | 21 anos ou mais (27,1%) e quem já concluiu (39,3%) | Nacional, com reforço em RJ, PA e BA | Perguntas 2, 3 e 4 |
 | ChatGPT | Presença no momento de estudo e de dúvida | Estudantes em preparação | Nacional | Estratégia do grupo (os microdados não trazem consumo de mídia) |
 | Uber Ads | Impacto no trajeto casa → local de prova, em 8 e 15 de novembro | Inscritos adultos e responsáveis que acompanham os menores | As 5 maiores cidades (11,7%), com expansão para as 10 maiores (17,3%) | Pergunta 1 |
@@ -910,12 +910,12 @@ Não imaginei que o trabalho seria tão extenso. Parte disso veio da escolha dos
 Comecei este trabalho sem experiência em engenharia de dados e precisei aprender, ao mesmo tempo, os conceitos e a ferramenta. As maiores dificuldades foram:
 
 - **Aprender e aplicar em pouco tempo.** Eu não tinha a dimensão do quanto esta área é ampla, nem de quantas ferramentas e possibilidades existem, e precisei transformar conceitos novos em prática em um curto período.
-- **Lidar com números e arquivos desse tamanho.** Trabalhar com um arquivo de 489 MB e quase 5 milhões de linhas era algo totalmente novo para mim. No primeiro momento, pensei em desistir; seguir o trabalho etapa por etapa foi o que me fez continuar.
+- **Lidar com números e arquivos extensos.** Trabalhar com um arquivo de 489 MB e quase 5 milhões de linhas era algo totalmente novo para mim. No primeiro momento, pensei em desistir; seguir o trabalho etapa por etapa foi o que me fez continuar.
 - **Administrar o tempo**, já que o volume de etapas e de documentação foi bem maior do que eu esperava.
 
 #### Uso de inteligência artificial
 
-Como engenharia de dados era um tema novo para mim, usei uma ferramenta de inteligência artificial para construir os códigos SQL. Isso não tirou o aprendizado do processo: cada consulta foi executada por mim no Databricks e conferida pelos resultados, e foi olhando esses resultados que identifiquei problemas como o gráfico de pizza que gerava duas pizzas de 100% e a legenda "Sim/Não", que não comunicava bem o público-alvo.
+Como engenharia de dados era um tema novo para mim, usei uma ferramenta de inteligência artificial para ajudar a construir os códigos SQL. Isso não tirou o aprendizado do processo: cada consulta foi executada por mim no Databricks e conferida pelos resultados, e foi olhando esses resultados que identifiquei problemas como o gráfico de pizza que gerava duas pizzas de 100% e a legenda "Sim/Não", que não comunicava bem o público-alvo.
 
 O tema, o problema de negócio, as perguntas, as hipóteses e a estratégia de canais, incluindo a ideia do Uber Ads no trajeto casa → local de prova, partiram da minha experiência com planejamento de mídia para clientes do segmento de educação. Em um trabalho tão extenso, a IA me ajudou a dividir o projeto em etapas menores e na parte operacional da documentação, como as tabelas e o sumário.
 
@@ -953,7 +953,7 @@ Várias partes do trabalho foram revisadas depois da primeira versão. Na coluna
 
 No meu dia a dia de mídia, trabalho com dashboards que já chegam prontos, com indicadores de alcance, cliques e audiência. Neste trabalho, pela primeira vez, parti do dado bruto: um arquivo de quase 5 milhões de linhas, com códigos que só faziam sentido com o dicionário do Inep ao lado. Aprendi a organizar esses dados em camadas, a transformar códigos em informação e a cruzá-los para testar hipóteses que eu levava como certas, como a de que o público de 16 a 20 anos era a maioria dos inscritos (e é: 72,9%) ou a de que os estados com mais inscritos seriam também os mais jovens (e, com exceção de São Paulo, não são).
 
-Outro aprendizado foi ver o dado mudar a estratégia, e não só confirmá-la. Descobrir que um terço dos inscritos é menor de idade, por exemplo, muda a forma de planejar a mídia, porque as plataformas limitam a segmentação de anúncios para esse público. Na minha área, esse raciocínio pode apoiar a escolha de praças, o dimensionamento de públicos e a distribuição de verba entre canais, a partir de dados abertos e verificáveis.
+Outro aprendizado foi ver o dado mudar a estratégia, e não só confirmá-la. Descobrir que um terço dos inscritos é menor de idade, por exemplo, muda a forma de planejar a mídia, porque algumas plataformas limitam a segmentação de anúncios para esse público. Na minha área, esse raciocínio pode apoiar a escolha de praças, o dimensionamento de públicos e a distribuição de verba entre canais, a partir de dados abertos e verificáveis.
 
 #### O que eu faria diferente
 
